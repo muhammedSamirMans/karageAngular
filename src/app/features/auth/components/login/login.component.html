@@ -1,0 +1,48 @@
+<div class="login-container">
+    <div class="login-box">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="images/logo.png" alt="Logo" />
+      </div>
+  
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="p-field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            pInputText
+            formControlName="email"
+            placeholder="Enter your email"
+          />
+          @if (loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched) {
+            <small>Email is required.</small>
+          }
+          @if (loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched) {
+            <small>Invalid email format.</small>
+          }
+        </div>
+  
+        <div class="p-field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            formControlName="password"
+            placeholder="Enter your password"
+          />
+          @if (loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched) {
+            <small>Password is required.</small>
+          }
+          @if (loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched) {
+            <small>Password must be at least 6 characters.</small>
+          }
+        </div>
+  
+        <!-- Rounded Button -->
+        <button pButton type="submit" label="Login" [disabled]="loginForm.invalid" class="rounded-button"></button>
+      </form>
+    </div>
+  </div>

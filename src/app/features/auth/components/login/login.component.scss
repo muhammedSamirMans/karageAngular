@@ -1,0 +1,76 @@
+/* Center the login box */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 98vh;
+    background-color: #f4f4f4;
+  }
+  
+  /* Login box styling */
+  .login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Logo styling */
+  .logo {
+    margin-bottom: 1.5rem;
+  }
+  
+  .logo img {
+    width: 100px; /* Adjust logo size */
+    height: auto;
+  }
+  
+  /* Input field styling */
+  .p-field {
+    margin-bottom: 1rem;
+  }
+  
+  .p-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-align: left;
+
+  }
+  
+  .p-field input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Rounded button styling */
+  .rounded-button {
+    border-radius: 20px !important; /* Rounded corners */
+    padding: 0.5rem 2rem !important; /* Button padding */
+    background-color: #007bff !important; /* Primary color */
+    border: none !important;
+    color: white !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rounded-button:hover {
+    background-color: #0056b3 !important; /* Darker shade on hover */
+  }
+  
+  .rounded-button:disabled {
+    background-color: #ccc !important; /* Disabled state */
+    cursor: not-allowed;
+  }
+  
+  /* Error message styling */
+  small {
+    color: red;
+    display: block;
+    margin-top: 0.5rem;
+  }

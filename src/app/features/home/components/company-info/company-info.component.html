@@ -1,0 +1,50 @@
+<p-toast></p-toast>
+@if(loading){
+<!-- Loader -->
+<div class="loader-container" >
+    <p-progressSpinner class="flex"></p-progressSpinner>
+  </div>
+}
+
+@else {
+<!-- Company Information Display -->
+<div  class="p-card company-card">
+    <div class="p-card-header p-text-center">
+      <h2><i class="pi pi-building"></i> {{ companyData?.data?.companyInfo?.companyName }}</h2>
+      <p class="p-text-muted">{{ companyData?.data?.companyInfo?.legalName }}</p>
+    </div>
+  
+    <div class="p-card-body">
+      <h3 class="p-text-bold">📍 Address</h3>
+      <p><i class="pi pi-map-marker"></i> {{ companyData?.data?.companyInfo?.companyAddr?.line1 }}, 
+        {{ companyData?.data?.companyInfo?.companyAddr?.city }}, 
+        {{ companyData?.data?.companyInfo?.companyAddr?.countrySubDivisionCode }} 
+        {{ companyData?.data?.companyInfo?.companyAddr?.postalCode }}</p>
+  
+      <h3 class="p-text-bold">📧 Contact</h3>
+      <p><i class="pi pi-envelope"></i> {{ companyData?.data?.companyInfo?.email?.address }}</p>
+  
+      <h3 class="p-text-bold">🗓️ Company Details</h3>
+      <p><i class="pi pi-calendar"></i> Founded: {{ companyData?.data?.companyInfo?.companyStartDate }}</p>
+      <p><i class="pi pi-globe"></i> Time Zone: {{ companyData?.data?.companyInfo?.defaultTimeZone }}</p>
+      <p><i class="pi pi-language"></i> Language: {{ companyData?.data?.companyInfo?.supportedLanguages }}</p>
+  
+      <h3 class="p-text-bold">🔹 Other Information</h3>
+      <p-table [value]="companyData?.data?.companyInfo?.nameValue" class="custom-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td class="p-text-bold">{{ item.name }}</td>
+            <td>{{ item.value }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+}
+

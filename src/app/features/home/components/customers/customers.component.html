@@ -1,0 +1,65 @@
+<p-toast></p-toast>
+
+<div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+  <h2 class="text-center">Customer List</h2>
+  <p-button label="Add Customer" icon="pi pi-user-plus" class="flex-end" (click)="openForm()"></p-button>
+</div>
+@if(loading){
+<!-- Loader (Displayed while fetching data) -->
+<div class="p-d-flex p-jc-center p-ai-center loader-container" >
+  <p-progressSpinner class="flex"></p-progressSpinner>
+</div>
+}
+@else{
+@if (customers.length > 0) {
+  <section>
+    <p-table  stripedRows 
+      [value]="customers"
+      [paginator]="true"
+      [rows]="5"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="p-text-uppercase">Name</th>
+          <th class="p-text-uppercase">Balance</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td class="p-text-bold">{{ customer?.name }}</td>
+          <td>
+            <span>
+              {{ customer?.balance }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- Stylish Add Customer Dialog -->
+    <p-dialog [(visible)]="displayForm" header="Add Customer" [modal]="true" [style]="{ width: '450px' }" class="styled-dialog">
+      <form #customerForm="ngForm">
+        <div class="p-fluid">
+          <div class="p-field p-grid">
+            <label for="name" class="p-col-12 p-md-4">Name</label>
+            <div class="p-col-12 p-md-8">
+              <input id="name" type="text" pInputText [(ngModel)]="newCustomer.name" name="name" #nameInput="ngModel" required>
+              @if (nameInput.invalid && nameInput.touched) {
+                <small class="p-error">Name is required</small>
+              }
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="p-dialog-footer flex justify-content-end">
+        <p-button label="Cancel" icon="pi pi-times" class="p-button-text p-button-secondary" (click)="displayForm = false" />
+        <p-button label="Save" icon="pi pi-check" class="p-button-primary" (click)="addCustomer()" />
+      </div>
+    </p-dialog>
+  </section>
+} @else {
+  <p class="p-text-center p-mt-4 text-muted">🚀 No customers found! Add your first customer now.</p>
+}
+}

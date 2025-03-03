@@ -1,0 +1,80 @@
+<p-toast></p-toast> <!-- Toast container -->
+
+<div class="p-mb-3">
+<h2 class="text-center">Invoices List</h2>
+  <p-button label="Add invoice" icon="pi pi-plus" (click)="openForm()" class="flex-end"></p-button>
+</div>
+@if(loading){
+    <!-- Loader (Displayed while fetching data) -->
+    <div class="p-d-flex p-jc-center p-ai-center loader-container" >
+      <p-progressSpinner class="flex"></p-progressSpinner>
+    </div>
+    }
+    @else{
+@if(invoices.length > 0) {
+  <section>
+    <p-table [value]="invoices" [paginator]="true" [rows]="5" responsiveLayout="scroll" stripedRows>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Total Amount</th>
+          <th>Balance Due</th>
+          <th>Invoice Date</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td>{{ customer?.customerName }}</td>
+          <td>{{ customer?.totalAmount  }}</td>
+          <td>{{ customer?.balanceDue  }}</td>
+          <td>{{ customer?.invoiceDate | date:'yyyy-MM-dd' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="displayForm" header="Add Customer" [modal]="true">
+      <form [formGroup]="invoiceForm"> <!--  Use Reactive Form -->
+        <div class="p-fluid">
+
+          <!--  Name Input (Required) -->
+          <div class="p-field">
+            <label for="customerRef">customer Name</label>
+            <input id="customerRef" type="text" pInputText formControlName="customerRef">
+            @if(invoiceForm.controls['customerRef'].invalid && invoiceForm.controls['customerRef'].touched) {
+              <small class="p-error">Name is required</small>
+            }
+          </div>
+           
+            <!--  Balance Due Input -->
+            <div class="p-field">
+                <label for="itemRef">itemRef</label>
+                <input id="itemRef"  pInputText formControlName="itemRef">
+                @if(invoiceForm.controls['itemRef'].invalid && invoiceForm.controls['itemRef'].touched) {
+                  <small class="p-error">Balance Due is required</small>
+                }
+              </div>
+
+          <!--  Total Amount Input -->
+          <div class="p-field">
+            <label for="totalAmount">Total Amount</label>
+            <input id="totalAmount" type="number" pInputText formControlName="totalAmount">
+            @if(invoiceForm.controls['totalAmount'].invalid && invoiceForm.controls['totalAmount'].touched) {
+              <small class="p-error">Total Amount is required</small>
+            }
+          </div>
+
+
+        </div>
+      </form>
+
+      <div class="flex">
+        <p-button label="Cancel" severity="secondary" (click)="displayForm = false" />
+        <p-button label="Save" (click)="addInvoice()" [disabled]="invoiceForm.invalid" />
+      </div>
+
+    </p-dialog>
+  </section>
+} @else {
+  <p>No Data Found</p>
+}
+    }

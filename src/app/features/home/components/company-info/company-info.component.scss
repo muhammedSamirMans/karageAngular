@@ -1,0 +1,44 @@
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .company-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--surface-b);
+    color: var(--text-color);
+  
+    .p-card-header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  
+    h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+  
+    p {
+      margin: 5px 0;
+    }
+  
+    .p-text-bold {
+      font-weight: bold;
+    }
+  
+    .custom-table th {
+      background-color: var(--primary-color);
+      color: white;
+    }
+  
+    .custom-table td {
+      padding: 8px;
+    }
+  }
+  
