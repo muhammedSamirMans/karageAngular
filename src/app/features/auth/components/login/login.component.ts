@@ -6,17 +6,21 @@ import { AuthService } from '../../../../core/service/auth.service';
 import { filter, switchMap, tap } from 'rxjs';
 import { GenericService } from '../../../../shared/services/generic.service';
 import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,ReactiveFormsModule,InputTextModule,ButtonModule],
+  imports: [FormsModule,ReactiveFormsModule,InputTextModule,ButtonModule, ToastModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  providers:[MessageService]
 })
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private genericService:GenericService,private authService:AuthService,private router:Router) {
+  constructor(private fb: FormBuilder,private genericService:GenericService,private authService:AuthService, private router:Router
+              ,private messageService: MessageService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,8 +31,13 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.genericService.postData('Auth/login', this.loginForm.value).pipe(
         tap((res: any) => {
-          this.authService.setToken(res?.data?.token);
-          this.genericService.isQBConnected.next(res?.data?.isQBConnected);
+          if(res.status == 200){
+            this.authService.setToken(res?.data?.token);
+            this.genericService.isQBConnected.next(res?.data?.isQBConnected);
+          }
+          else{
+            this.messageService.add({ severity: 'error', summary: res.status, detail: res.message });
+          }
         }), // Store token
         switchMap((res: any) => {
           if (res?.data?.isQBConnected) {
